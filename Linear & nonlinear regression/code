@@ -1,1 +1,55 @@
+function[RANK,r2,a0,a1]=regression(x,y) 
+[rlin2,alin0,alin1]=LinearRegression2(x,y);%%firstly for linear
+EQ1=@(X) alin0+X*alin1;
 
+[rpow2,a00pow,a1pow]=LinearRegression2(log10(x),log10(y));%% for nonlinear (Power)
+a0pow=10^(a00pow);
+EQ2=@(x) a0pow*x.^(a1pow);
+
+
+[rsat,a0sat,a1sat]=LinearRegression2(1./x,1./y);%% for nonlinear ( saturation)
+alpha=1/a1sat;
+beta=alpha*a0sat;
+EQ3=@(x) alpha*x./(beta+x);
+
+
+XALL=linspace(min(x),max(x));
+plot(XALL,EQ1(XALL),XALL,EQ2(XALL),':',XALL,EQ3(XALL),'--',x,y,'o');
+legend('Linear','Power','Saturation','data points');
+if (rlin2>rpow2)
+RANK=1;
+r2=rllin2;
+a0=alin0;
+a1=alin1;
+
+end 
+if (rpow2>rsat)
+ RANK=2;
+r2=rsat;
+a0=a0sat;
+a1=a1sat;
+        
+        
+end
+if (rsat>rpow2)
+ RANK=3;
+r2=rsat;
+a0=alpha;
+a1=beta;
+        
+        
+end
+end
+
+function [r2,a0,a1]=LinearRegression2(x,y) 
+
+
+
+n = length(x);     
+a0 = (mean(y)*sum(x.^2)-mean(x)*sum(x.*y))/(sum(x.^2)-n*mean(x)^2);
+a1 = (sum(x.*y)-mean(x)*sum(y))/(sum(x.^2)-n*mean(x)^2);
+st=sum((y - mean(y)).^2);
+sr=sum((y-a0-x*a1).^2);
+r2=(st-sr)/st;
+
+end
