@@ -1,0 +1,38 @@
+clear all
+clc
+disp('program to solve 1st Order differential Equation using different numerical methods   ')
+
+fun=@(t,c) 2.5-0.05*c;
+t0=0;
+tend=50;
+c0=50;
+h=5;
+
+
+ ymid(1)=c0;  % initial condition for Mid point
+ ct(1)=10;
+ tre(1)=40;
+N=(tend-t0)/h;
+
+%% initializing solutions
+t=[t0:h:tend];
+for i=1:N
+   
+%%  solving using Midpoint method 
+    u1=h*fun(t(i),ymid(i));
+    u2=h*fun(t(i)+h/2,ymid(i)+u1/2);
+    ymid(i+1)=ymid(i)+u2;
+    
+
+    ct(i+1)=50*(1-exp(-0.05*t(i+1)))+10*exp(-0.05*t(i+1));
+    tre(i+1)=abs(ct(i+1)-ymid(i+1));    
+end
+
+%% plot 
+    plot(t,ymid(:),'*',t,tre(:),'+',t,ct(:),'+');
+   legend('C','Ct','ture error ')
+
+
+
+disp(['Values of C as t changes ' num2str(ymid) ' with step size h= ' num2str(h)])
+disp(['ture absloute error  ' num2str(tre) ' with step size h= ' num2str(h)])
