@@ -2,7 +2,7 @@
 ![1_wxtUxzIjfqGW2GDUSYbSMw](https://user-images.githubusercontent.com/67114907/89843691-23bc5d00-db82-11ea-8486-9ad03d637df9.png)
 
 
-Solving some numerical methods problems with MATLAB programming language to improve ,expand and practice my skills AT MATLAB.
+Solving some numerical  problems with MATLAB programming language to improve ,expand and practice my skills at MATLAB.
 
 
 ## [ Bisection Method ](https://github.com/Mojahed-nour/MATLAB-programming/tree/master/Bisection%20Method) :
